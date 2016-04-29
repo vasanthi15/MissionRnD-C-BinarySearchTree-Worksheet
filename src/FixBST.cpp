@@ -32,6 +32,40 @@ struct node{
 	struct node *right;
 };
 
-void fix_bst(struct node *root){
-
+void fix_bst2(struct node *root, struct node **bef, struct node **first, struct node **mid,struct  node **last){
+	if (root != NULL)
+	{
+		fix_bst2(root->left, bef, first, mid, last);
+		if (*bef && (*bef)->data > root->data)
+		{
+			if (*first == NULL)
+				*last = root;
+			else
+			{
+				*first = *bef;
+				*mid = root;
+			}
+		}
+		*bef = root;
+		fix_bst2(root->right, bef, first, mid, last);
+	}
+		
+}
+void node_swap(int *a, int *b)
+{
+	int *temp=NULL;
+	*temp = *a;
+	*a = *b;
+	*b = *temp;
+}
+void fix_bst(struct node *root)
+{
+	if (root == NULL)
+		return;
+	struct node *first=NULL,*last=NULL,*mid=NULL,*bef=NULL;
+	fix_bst2(root,&bef,&first,&mid,&last);
+	if ((first&&mid) == 1)
+		node_swap(&(first->data), &(mid->data));
+	else if ((first&&last) == 1)
+		node_swap(&(first->data), &(last->data));
 }

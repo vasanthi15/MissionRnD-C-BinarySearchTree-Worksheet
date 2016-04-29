@@ -41,5 +41,19 @@ struct node{
 
 int get_closest_leaf_distance(struct node *root, struct node *temp)
 {
+	if (root==NULL||temp==NULL)
   return -1;
+	struct node *temp1;
+	temp1 = root;
+	while (temp->data != temp1->data)
+	{
+		temp1 = temp1->left;
+	}
+	temp1 = root;
+	while (temp->data != temp1->data)
+	{
+		temp1 = temp1->left;
+	}
+	return 1+get_closest_leaf_distance(root->left,temp);
+
 }
